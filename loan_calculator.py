@@ -6,7 +6,6 @@ MAX_DEBT_TO_INCOME_RATIO = 0.33
 class LoanCalculator:
     def __init__(
         self,
-        loan_amount: int,
         annual_rate: float,
         years: int,
         borrower_profile: Profile,
@@ -19,12 +18,12 @@ class LoanCalculator:
         :param borrower_profile: An instance of Profile containing borrower's
                                     financial details.
         """
-        self.loan_amount = loan_amount
+
         self.annual_rate = annual_rate
         self.years = years
         self.borrower = borrower_profile
 
-    def calculate_max_loan_amount(self):
+    def calculate_max_loan_amount(self) -> int:
         """
         Calculates the maximum loan amount based on the borrower's monthly revenue.
         :return: The maximum loan amount in euros.
@@ -36,39 +35,40 @@ class LoanCalculator:
             * (1 - (1 + monthly_ratio) ** -(self.years * 12))
             / monthly_ratio
         )
-        return max_loan_amount
+        return int(max_loan_amount)
 
-    def is_loan_affordable(self):
+    def is_loan_affordable(self, loan_amount: int) -> bool:
         """
         Checks if the loan is affordable based on the borrower's financial profile.
         :return: True if the loan is affordable, False otherwise.
         """
         max_loan_amount = self.calculate_max_loan_amount()
-        return self.loan_amount <= max_loan_amount
+        return loan_amount <= max_loan_amount
 
-    def calculate_monthly_payment(self):
+    def calculate_monthly_payment(self, loan_amount: int) -> int:
         monthly_rate = self.annual_rate / 100 / 12
         number_of_payments = self.years * 12
         if monthly_rate == 0:
-            return self.loan_amount / number_of_payments
-        return (self.loan_amount * monthly_rate) / (
-            1 - (1 + monthly_rate) ** -number_of_payments
+            return loan_amount / number_of_payments
+        return int(
+            (loan_amount * monthly_rate)
+            / (1 - (1 + monthly_rate) ** -number_of_payments)
         )
 
-    def total_payment(self):
-        return self.calculate_monthly_payment() * self.years * 12
+    def total_payment(self, loan_amount: int) -> int:
+        return self.calculate_monthly_payment(loan_amount) * self.years * 12
 
-    def total_interest(self):
-        return self.total_payment() - self.loan_amount
+    def total_interest(self, loan_amount: int) -> int:
+        return self.total_payment(loan_amount) - loan_amount
 
-    def display_loan_summary(self):
-        monthly_payment = self.calculate_monthly_payment()
-        total_payment = self.total_payment()
-        total_interest = self.total_interest()
+    def display_loan_summary(self, loan_amount: int) -> str:
+        monthly_payment = self.calculate_monthly_payment(loan_amount)
+        total_payment = self.total_payment(loan_amount)
+        total_interest = self.total_interest(loan_amount)
 
         summary = (
             f"Loan Summary:\n"
-            f"Loan Amount: {self.loan_amount:.2f}€\n"
+            f"Loan Amount: {loan_amount:.2f}€\n"
             f"Annual Interest Rate: {self.annual_rate:.2f}%\n"
             f"Years: {self.years}\n"
             f"Monthly Payment: {monthly_payment:.2f}€\n"
@@ -79,18 +79,17 @@ class LoanCalculator:
 
 
 if __name__ == "__main__":
-    borrower = Profile(monthly_revenue=5000, monthly_expenses=1000, age=30)
+    borrower = Profile(monthly_revenue=2800, monthly_expenses=1000, age=30)
 
-    loan = LoanCalculator(
-        loan_amount=180000, annual_rate=3.58, years=20, borrower_profile=borrower
-    )
+    desired_loan_amount = 180000
+    loan = LoanCalculator(annual_rate=3.58, years=20, borrower_profile=borrower)
     print(loan.borrower.display_profile())
     print("##################################")
     print("Calculating loan affordability...")
     print(loan.calculate_max_loan_amount())
     print("##################################")
 
-    if loan.is_loan_affordable():
-        print(loan.display_loan_summary())
+    if loan.is_loan_affordable(desired_loan_amount):
+        print(loan.display_loan_summary(desired_loan_amount))
     else:
         print("This loan exceeds the authorized debt ratio.")

@@ -10,7 +10,7 @@ class Evaluator:
         self,
         buy_price,
         monthly_rental_income,
-        expenses,
+        property_tax,
         annual_coproperty_fees,
         loan_calculator,
         management_fees=0,
@@ -19,7 +19,7 @@ class Evaluator:
     ):
         self.buy_price = buy_price
         self.monthly_rental_income = monthly_rental_income
-        self.property_tax = expenses
+        self.property_tax = property_tax
         self.annual_coproperty_fees = annual_coproperty_fees
         self.loan_calculator = loan_calculator
         self.management_fees = management_fees
@@ -69,5 +69,17 @@ class Evaluator:
             "gross_profitability": round(gross_profitability, 2),
             "net_profitability": round(net_profitability, 2),
             "monthly_cash_flow": round(self.calculate_monthly_cash_flow(), 2),
+            "monthly_rent": self.monthly_rental_income,
+            "monthly_payment": self.loan_calculator.calculate_monthly_payment(
+                self.buy_price
+            ),
+            "loan_amount": self.loan_calculator.calculate_max_loan_amount(),
+            "annual_rate": self.loan_calculator.annual_rate,
+            "apport": self.loan_calculator.borrower.apport,
             "irr": round(irr, 2),
+            "copro_fees": self.annual_coproperty_fees,
+            "expenses": self.property_tax,
+            "buy_price": self.buy_price,
+            "management_fees": self.management_fees,
+            "duration": self.holding_years,
         }

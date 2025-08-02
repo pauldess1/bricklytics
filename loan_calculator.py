@@ -76,20 +76,3 @@ class LoanCalculator:
             f"Total Interest Paid: {total_interest:.2f}€"
         )
         return summary
-
-
-if __name__ == "__main__":
-    borrower = Profile(monthly_revenue=2800, monthly_expenses=1000, age=30)
-
-    desired_loan_amount = 180000
-    loan = LoanCalculator(annual_rate=3.58, years=20, borrower_profile=borrower)
-    print(loan.borrower.display_profile())
-    print("##################################")
-    print("Calculating loan affordability...")
-    print(loan.calculate_max_loan_amount())
-    print("##################################")
-
-    if loan.is_loan_affordable(desired_loan_amount):
-        print(loan.display_loan_summary(desired_loan_amount))
-    else:
-        print("This loan exceeds the authorized debt ratio.")

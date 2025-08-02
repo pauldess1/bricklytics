@@ -3,20 +3,35 @@ import plotly.graph_objects as go
 
 
 def display_indicators(result: dict):
-    st.subheader("🏦 Détail du prêt accordé")
-    col1, col2, col3, col4, col5 = st.columns(5)
-    col1.metric("💵 Montant du prêt", f"{result.get('loan_amount', 0):,.0f} €")
-    col2.metric("🏠 Apport personnel", f"{result.get('apport', 0):,.0f} €")
-    col3.metric("📅 Durée", f"{result.get('duration', 0)} ans")
-    col4.metric("📈 Taux annuel", f"{result.get('annual_rate', 0):.2f} %")
-    col5.metric("💳 Mensualité", f"{result.get('monthly_payment', 0):,.2f} €")
-
     st.subheader("📌 Indicateurs de performance")
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("💰 Rentabilité brute", f"{result.get('gross_profitability', 0):.2f} %")
     col2.metric("💸 Rentabilité nette", f"{result.get('net_profitability', 0):.2f} %")
     col3.metric("📉 Cashflow mensuel", f"{result.get('monthly_cash_flow', 0):,.2f} €")
     col4.metric("📈 TRI (IRR)", f"{result.get('irr', 0):.2f} %")
+
+    st.subheader("🏦 Détail du prêt accordé")
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.markdown(
+        f"<small>💵 Montant du prêt<br><b>{result.get('loan_amount', 0):,.0f} €</b></small>",
+        unsafe_allow_html=True,
+    )
+    col2.markdown(
+        f"<small>🏠 Apport personnel<br><b>{result.get('apport', 0):,.0f} €</b></small>",
+        unsafe_allow_html=True,
+    )
+    col3.markdown(
+        f"<small>📅 Durée<br><b>{result.get('duration', 0)} ans</b></small>",
+        unsafe_allow_html=True,
+    )
+    col4.markdown(
+        f"<small>📈 Taux annuel<br><b>{result.get('annual_rate', 0):.2f} %</b></small>",
+        unsafe_allow_html=True,
+    )
+    col5.markdown(
+        f"<small>💳 Mensualité<br><b>{result.get('monthly_payment', 0):,.2f} €</b></small>",
+        unsafe_allow_html=True,
+    )
 
 
 def display_amortization_chart(result: dict):

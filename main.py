@@ -4,8 +4,7 @@ from rentability_evaluator import Evaluator
 
 
 def main():
-    # Create borrower profile with apport
-    profile = Profile(age=32, monthly_revenue=4000, monthly_expenses=500, apport=5000)
+    profile = Profile(age=32, monthly_revenue=4000, apport=5000)
     print(profile.display_profile())
 
     # Setup loan calculator (interest rate and duration)

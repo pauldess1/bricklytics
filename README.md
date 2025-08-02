@@ -1,69 +1,80 @@
 # 🧱 Bricklytics
 
-**Bricklytics** est un outil d’aide à l’investissement locatif qui simule la capacité d’emprunt, évalue la rentabilité d’un bien immobilier, et collecte automatiquement des annonces via du scraping.  
-Son objectif : permettre à un investisseur de détecter rapidement des opportunités viables, en fonction de son profil financier et du marché.
+**Bricklytics** est un outil d’aide à la décision pour l’investissement locatif.  
+Il permet de simuler la capacité d’emprunt, d’évaluer la rentabilité d’un bien immobilier, et de visualiser les indicateurs financiers clés pour guider l’investisseur.
+
+Son objectif : **aider rapidement à estimer la viabilité d’un projet immobilier**, en fonction du profil financier de l’utilisateur et des caractéristiques du bien.
 
 ---
 
 ## 🚀 Fonctionnalités
 
-- 🧮 **Calcul de capacité d’emprunt** basé sur le revenu, l’âge, l’apport, le taux et la durée.
-- 📉 **Simulation de prêt** avec mensualités, intérêts et résumé complet.
-- 📊 **Évaluation de rentabilité** (brute, nette, TRI) d’un bien locatif.
-- 🏘️ **Scraping d’annonces** (à venir) pour détecter des opportunités en ligne automatiquement.
-- 💡 **Pipeline complet** du profil emprunteur à la simulation financière.
+- 🧮 **Calcul de capacité d’emprunt** selon le revenu, l’âge, l’apport, le taux et la durée.
+- 📉 **Simulation de prêt** avec mensualités, intérêts, et échéancier d’amortissement.
+- 📊 **Évaluation de rentabilité** (brute, nette, cashflow mensuel, TRI).
+- 📈 **Visualisation graphique** des flux financiers et de l’effort d’épargne.
+- 💡 **Outil complet de simulation financière** pour les investisseurs particuliers.
 
 ---
 
 ## 📁 Structure du projet
+
 ```
 bricklytics/
 │
-├── borrower_profile.py
-├── loan_calculator.py 
-├── rentability_evaluator.py
-├── scraper/
+├── core/
+│   ├── borrower_profile.py
+│   ├── loan_calculator.py 
+│   ├── rentability_evaluator.py
+│
+├── app/
+│   ├── interface.py
+│   ├── plot_results.py
+│
 ├── tests/
 ├── main.py 
 └── README.md
 ```
+
 ---
 
 ## 🔧 Exécution de l'outil
 
 ### 1. Installation
+
 ```bash
 git clone https://github.com/pauldess1/bricklytics.git
 cd bricklytics
 python -m venv venv
-venv/bin/activate
+venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+### 2. Lancer l’application Streamlit
 
-# 🗺️ Roadmap
-## ✅ Phase 1 – Core financier
- Création du profil utilisateur
+```bash
+streamlit run main.py
+```
 
- Calcul du montant d'emprunt maximal
+---
 
- Simulation du prêt et mensualités
+## 🗺️ Roadmap
 
-## ✅ Phase 2 – Évaluation financière
- Calcul du cashflow
+### ✅ Phase 1 – Core financier
 
- Rentabilité brute et nette
+- Création du profil utilisateur
+- Calcul du montant d'emprunt maximal
+- Simulation du prêt et mensualités
 
- Calcul du TRI
+### ✅ Phase 2 – Évaluation financière
 
-## 🔄 Phase 3 – Scraping & données marché
- Développement du module de scraping d'annonces
+- Calcul du cashflow
+- Rentabilité brute et nette
+- Calcul du TRI
+- Visualisations Streamlit
 
- Intégration automatique dans le pipeline
+### 🔜 Phase 3 – Interface & automatisation
 
- Filtrage intelligent des biens viables
-
-## 🔜 Phase 4 – Interface & automatisation
- Lancement en ligne (API ou interface web)
-
- Génération de rapports PDF
+- Amélioration de l’interface Streamlit
+- Génération de rapports PDF
+- Scénarios alternatifs et simulations comparatives
